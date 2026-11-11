@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Tilll · Docs</title>
+    <meta
+      name="description"
+      content="Install Tilll, add the checkout to your site, and verify payments with signed webhooks. Customers pay from any supported chain and you settle in the asset you choose."
+    />
+    <meta name="theme-color" content="#0b1f3a" />
+    <meta property="og:title" content="Tilll · Docs" />
+    <meta property="og:description" content="Install Tilll, add the checkout, and verify payments." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script type="module" src="./src/site.ts"></script>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-navy focus:px-4 focus:py-2 focus:text-white"
+      >Skip to content</a
+    >
+
+    <header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6">
+        <a href="./" class="flex items-center gap-2" aria-label="Tilll, back to the home page">
+          <img src="./tilll-mark.svg" alt="" width="32" height="32" class="h-8 w-8" />
+          <span class="font-display text-2xl font-extrabold tracking-tighter">tilll</span>
+        </a>
+        <nav
+          aria-label="Main"
+          class="order-last flex w-full gap-5 overflow-x-auto text-sm font-medium text-slate-body sm:order-none sm:w-auto"
+        >
+          <a href="./" class="whitespace-nowrap hover:text-navy">Home</a>
+          <a href="./docs.html" aria-current="page" class="whitespace-nowrap font-bold text-navy">Docs</a>
+        </nav>
+        <a data-needs="github" href="{{github}}" rel="noopener" class="btn btn-primary btn-sm ml-auto">GitHub</a>
+      </div>
+    </header>
+
+    <main id="main" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <h1 class="font-display text-4xl leading-tight font-extrabold tracking-tight sm:text-5xl">Documentation</h1>
+      <p class="mt-4 max-w-2xl text-lg text-slate-body">
+        Accept crypto payments from any supported chain and settle in the asset you choose.
+      </p>
+
+      <div class="mt-10 grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-14">
+        <nav aria-label="On this page" class="lg:sticky lg:top-24 lg:self-start">
+          <h2 class="text-sm font-bold">On this page</h2>
+          <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-body lg:flex-col lg:gap-y-2.5">
+            <li><a href="#overview" class="hover:text-navy">Overview</a></li>
+            <li><a href="#quickstart" class="hover:text-navy">Quickstart</a></li>
+            <li><a href="#accept" class="hover:text-navy">Accept a payment</a></li>
+            <li><a href="#webhooks" class="hover:text-navy">Webhooks</a></li>
+            <li><a href="#refunds" class="hover:text-navy">Refunds</a></li>
+            <li><a href="#security" class="hover:text-navy">Integration security</a></li>
+            <li><a href="#go-live" class="hover:text-navy">Go-live checklist</a></li>
+            <li><a href="#configuration" class="hover:text-navy">Configuration</a></li>
+            <li><a href="#api" class="hover:text-navy">API reference</a></li>
+            <li><a href="#privacy" class="hover:text-navy">Privacy and limitations</a></li>
+          </ul>
+        </nav>
+
+        <div class="doc min-w-0 space-y-16">
+          <!-- Overview -->
+          <section id="overview" aria-labelledby="overview-title">
+            <h2 id="overview-title" class="font-display text-3xl font-extrabold tracking-tight">Overview</h2>
+            <p class="mt-4 text-slate-body">
+              Tilll is a self-hosted payment server. Customers pay with the token they hold, on the chain they hold it.
+              You receive the settlement asset you choose in your own NEAR Intents account. Tilll has no sign-up and
+              charges no fee of its own.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">How a payment works</h3>
+            <ol class="mt-4 grid gap-5 md:grid-cols-3">
+              <li class="rounded-2xl border border-line bg-white p-6">
+                <p class="text-xs font-bold tracking-wide text-slate-body uppercase">Server-side</p>
+                <h4 class="mt-2 font-bold">Create an invoice</h4>
+                <p class="mt-2 text-sm text-slate-body">Your server sets the amount, using the merchant secret.</p>
+              </li>
+              <li class="rounded-2xl border border-line bg-white p-6">
+                <p class="text-xs font-bold tracking-wide text-slate-body uppercase">Client-side</p>
+                <h4 class="mt-2 font-bold">The customer pays</h4>
+                <p class="mt-2 text-sm text-slate-body">
+                  They choose a network and a token in the checkout, then send the exact amount shown.
+                </p>
+              </li>
+              <li class="rounded-2xl border border-line bg-white p-6">
+                <p class="text-xs font-bold tracking-wide text-slate-body uppercase">Server-side</p>
+                <h4 class="mt-2 font-bold">Fulfil the order</h4>
+                <p class="mt-2 text-sm text-slate-body">
+                  Tilll sends a signed <code>invoice.paid</code> webhook to your server.
+                </p>
+              </li>
+            </ol>
+
+            <h3 class="mt-8 text-xl font-bold">Key concepts</h3>
+            <dl class="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt class="font-semibold">Invoice</dt>
+                <dd class="text-slate-body">
+                  A request for a fixed amount, created by your server. It has a status of <code>open</code>,
+                  <code>paid</code>, <code>expired</code> or <code>canceled</code>.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt class="font-semibold">Payment attempt</dt>
+                <dd class="text-slate-body">
+                  One try by a customer to pay an invoice with a chosen token. It has its own deposit address and exact
+                  amount.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt class="font-semibold">Settlement asset</dt>
+                <dd class="text-slate-body">
+                  The asset you receive, set by <code>SETTLEMENT_ASSET_ID</code>. Invoice amounts, refunds and refund
+                  limits are all in this asset. The default is USDC on NEAR.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt class="font-semibold">Settlement account</dt>
+                <dd class="text-slate-body">
+                  The NEAR account whose NEAR Intents balance receives your payments and funds your refunds.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt class="font-semibold">Merchant secret</dt>
+                <dd class="text-slate-body">Authorizes the merchant API and the dashboard. It stays on your server.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt class="font-semibold">Webhook secret</dt>
+                <dd class="text-slate-body">Signs the events Tilll sends, so your server can verify their origin.</dd>
+              </div>
+            </dl>
+          </section>
+
+          <!-- Quickstart -->
+          <section id="quickstart" aria-labelledby="quickstart-title">
+            <h2 id="quickstart-title" class="font-display text-3xl font-extrabold tracking-tight">Quickstart</h2>
+            <p class="mt-4 text-slate-body">
+              Run Tilll locally and create a test invoice. You need Node 22.12 or newer,
+              <a href="https://pnpm.io" rel="noopener" class="link">pnpm</a> and Docker.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">1. Install and configure</h3>
+            <div class="on-dark mt-3 min-w-0 rounded-2xl bg-navy p-5 text-white">
+              <div class="flex items-center justify-between gap-3">
+                <h4 class="text-sm font-semibold text-slate-200">Terminal</h4>
+                <button type="button" hidden data-copy="setup" class="btn btn-outline-inverse btn-sm">Copy</button>
+              </div>
+              <pre
+                id="setup"
+                class="mt-3 font-mono text-sm leading-loose break-words whitespace-pre-wrap"
+              ><code>git clone {{cloneTarget}} tilll &amp;&amp; cd tilll
+pnpm install
+pnpm tilll init
+docker compose up --build</code></pre>
+            </div>
+            <p class="mt-4 text-slate-body">
+              <code>pnpm tilll init</code> creates <code>.env</code> and generates your secrets. It doesn't print them,
+              and running it again changes nothing. Tilll is ready when the log shows
+              <code>Tilll is listening on http://localhost:8080</code>.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">2. Open the dashboard</h3>
+            <p class="mt-2 text-slate-body">
+              Go to <code>http://localhost:8080/dashboard</code> and sign in with <code>MERCHANT_SECRET</code> from
+              <code>.env</code>.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">3. Create a test invoice</h3>
+            <p class="mt-2 text-slate-body">
+              Select <strong>Create invoice</strong>, then open the payment link. The hosted payment page for that
+              invoice appears.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">4. Verify your installation</h3>
+            <div class="on-dark mt-3 min-w-0 rounded-2xl bg-navy p-5 text-white">
+              <div class="flex items-center justify-between gap-3">
+                <h4 class="text-sm font-semibold text-slate-200">Terminal</h4>
+                <button type="button" hidden data-copy="check" class="btn btn-outline-inverse btn-sm">Copy</button>
+              </div>
+              <pre
+                id="check"
+                class="mt-3 font-mono text-sm leading-loose break-words whitespace-pre-wrap"
+              ><code>pnpm tilll check
+pnpm dry-quote --from base:USDC --amount 5
+pnpm demo</code></pre>
+            </div>
+            <dl class="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>pnpm tilll check</code></dt>
+                <dd class="text-slate-body">
+                  Reads your configuration and tests each service it depends on. A ✗ names what to fix.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>pnpm dry-quote</code></dt>
+                <dd class="text-slate-body">
+                  Requests a live quote without creating anything. It shows what a customer would send, the fees, and
+                  what you would receive.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>pnpm demo</code></dt>
+                <dd class="text-slate-body">
+                  Starts a demo shop, a hosted payment page and the dashboard against a mock payment network, so you can
+                  pay and refund an invoice end to end.
+                </dd>
+              </div>
+            </dl>
+            <div class="mt-6 rounded-xl border border-blue-ink/25 bg-blue-bg p-4 text-sm text-navy">
+              <p><strong class="text-blue-ink">Note.</strong> The quickstart moves no funds.</p>
+            </div>
+          </section>
+
+          <!-- Accept a payment -->
+          <section id="accept" aria-labelledby="accept-title">
+            <h2 id="accept-title" class="font-display text-3xl font-extrabold tracking-tight">Accept a payment</h2>
+            <p class="mt-4 text-slate-body">
+              Create an invoice on your server, open the checkout in your page, then fulfil the order when the payment
+              is confirmed. The browser only ever handles the invoice id.
+            </p>
+
+            <div class="mt-10">
+              <p class="text-xs font-bold tracking-wide text-slate-body uppercase">Step 1 · Server-side</p>
+              <h3 class="mt-1 text-xl font-bold">Create an invoice</h3>
+              <p class="mt-2 text-slate-body">
+                Send <code>POST /v1/invoices</code> with the merchant secret. Take the amount from your own catalogue
+                and save the returned invoice id on the order.
+              </p>
+              <div class="on-dark mt-3 min-w-0 rounded-2xl bg-navy p-5 text-white">
+                <div class="flex items-center justify-between gap-3">
+                  <h4 class="text-sm font-semibold text-slate-200">Your server (Node)</h4>
+                  <button type="button" hidden data-copy="create" class="btn btn-outline-inverse btn-sm">Copy</button>
+                </div>
+                <pre
+                  id="create"
+                  class="mt-3 font-mono text-sm leading-relaxed break-words whitespace-pre-wrap"
+                ><code>// The total comes from YOUR catalogue, never from the browser.
+const order = await db.orders.create({ items, total: "5.00" });
+
+const response = await fetch(`${process.env.TILLL_URL}/v1/invoices`, {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${process.env.MERCHANT_SECRET}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    amount: order.total,
+    description: `Order ${order.id}`,
+    metadata: { orderId: order.id },
+  }),
+});
+const invoice = await response.json();
+
+await db.orders.update(order.id, { invoiceId: invoice.id });
+// Give the page invoice.id, or send the customer to invoice.payUrl.</code></pre>
+              </div>
+              <h4 class="mt-6 text-base font-bold">Parameters</h4>
+              <dl data-params="invoice" class="mt-3 divide-y divide-line rounded-2xl border border-line bg-white">
+                <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                  <dt>
+                    <code>amount</code>
+                    <span class="mt-1 block text-xs text-slate-body">string · Required</span>
+                  </dt>
+                  <dd class="text-slate-body">
+                    The amount in settlement asset units, as a string such as <code>"5.00"</code>.
+                  </dd>
+                </div>
+                <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                  <dt>
+                    <code>description</code>
+                    <span class="mt-1 block text-xs text-slate-body">string · Optional</span>
+                  </dt>
+                  <dd class="text-slate-body">Shown to the customer. Up to 500 characters.</dd>
+                </div>
+                <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                  <dt>
+                    <code>metadata</code>
+                    <span class="mt-1 block text-xs text-slate-body">object · Optional</span>
+                  </dt>
+                  <dd class="text-slate-body">
+                    Your own key-value data, such as an order id. Up to 4 KB of JSON. It is returned in webhooks and is
+                    never shown to the customer.
+                  </dd>
+                </div>
+                <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                  <dt>
+                    <code>expiresInMinutes</code>
+                    <span class="mt-1 block text-xs text-slate-body">integer · Optional</span>
+                  </dt>
+                  <dd class="text-slate-body">
+                    How long the invoice stays open, from 1 to 10080 (seven days). Defaults to 60.
+                  </dd>
+                </div>
+              </dl>
+              <p class="mt-4 text-slate-body">
+                The response is the invoice object. It includes <code>id</code> and <code>payUrl</code>, the address of
+                its hosted payment page.
+              </p>
+            </div>
+
+            <div class="mt-12">
+              <p class="text-xs font-bold tracking-wide text-slate-body uppercase">Step 2 · Client-side</p>
+              <h3 class="mt-1 text-xl font-bold">Open the checkout</h3>
+              <p class="mt-2 text-slate-body">
+                Load the script from your Tilll server and give a button the invoice id.
+              </p>
+              <div class="on-dark mt-3 min-w-0 rounded-2xl bg-navy p-5 text-white">
+                <div class="flex items-center justify-between gap-3">
+                  <h4 class="text-sm font-semibold text-slate-200">Embed the checkout</h4>
+                  <button type="button" hidden data-copy="embed" class="btn btn-outline-inverse btn-sm">Copy</button>
+                </div>
+                <pre
+                  id="embed"
+                  class="mt-3 font-mono text-sm leading-relaxed break-words whitespace-pre-wrap"
+                ><code>&lt;script src="https://pay.example.com/checkout.js"&gt;&lt;/script&gt;
+&lt;button data-tilll-invoice="inv_..."&gt;Pay with crypto&lt;/button&gt;</code></pre>
+              </div>
+              <dl class="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
+                <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                  <dt><code>data-tilll-invoice</code></dt>
+                  <dd class="text-slate-body">
+                    Set on any element. Selecting it opens the checkout as a dialog. It works for elements added after
+                    the page loads.
+                  </dd>
+                </div>
+                <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                  <dt><code>data-tilll-inline</code></dt>
+                  <dd class="text-slate-body">Set on an empty element. The checkout renders inside it.</dd>
+                </div>
+                <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                  <dt><code>Tilll.open(options)</code></dt>
+                  <dd class="text-slate-body">
+                    Opens the checkout from your own code. <code>options</code> takes <code>invoiceId</code> and the
+                    optional callbacks <code>onPaid</code> and <code>onClose</code>.
+                  </dd>
+                </div>
+              </dl>
+              <div class="mt-4 rounded-xl border border-amber-ink/30 bg-amber-bg p-4 text-sm text-navy">
+                <p>
+                  <strong class="text-amber-ink">Warning.</strong> Don't fulfil orders from <code>onPaid</code>. It runs
+                  in the customer's browser and can be spoofed. Use it to update the page only.
+                </p>
+              </div>
+              <h4 class="mt-6 text-base font-bold">Hosted payment page</h4>
+              <p class="mt-2 text-slate-body">
+                To skip embedding, redirect the customer to <code>payUrl</code>. It shows the same checkout, served by
+                Tilll.
+              </p>
+              <h4 class="mt-6 text-base font-bold">Content Security Policy</h4>
+              <p class="mt-2 text-slate-body">
+                If your page sets a Content-Security-Policy, add your Tilll address to <code>script-src</code> for the
+                script, <code>connect-src</code> for its requests, and <code>img-src</code> for token and network
+                images. Without <code>img-src</code> the checkout shows letter badges instead of logos.
+              </p>
+            </div>
+
+            <div class="mt-12">
+              <p class="text-xs font-bold tracking-wide text-slate-body uppercase">Step 3 · Server-side</p>
+              <h3 class="mt-1 text-xl font-bold">Fulfil the order</h3>
+              <p class="mt-2 text-slate-body">
+                When the customer's payment is confirmed, Tilll sends an <code>invoice.paid</code> webhook to
+                <code>WEBHOOK_URL</code>. Verify it and fulfil the order, as described in
+                <a href="#webhooks" class="link">Webhooks</a>.
+              </p>
+            </div>
+          </section>
+
+          <!-- Webhooks -->
+          <section id="webhooks" aria-labelledby="webhooks-title">
+            <h2 id="webhooks-title" class="font-display text-3xl font-extrabold tracking-tight">Webhooks</h2>
+            <p class="mt-4 text-slate-body">
+              Use webhooks to learn when a payment completes. Tilll sends a signed JSON <code>POST</code> to
+              <code>WEBHOOK_URL</code> for every event.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">The event object</h3>
+            <div class="on-dark mt-3 min-w-0 rounded-2xl bg-navy p-5 text-white">
+              <div class="flex items-center justify-between gap-3">
+                <h4 class="text-sm font-semibold text-slate-200">An event</h4>
+                <button type="button" hidden data-copy="event" class="btn btn-outline-inverse btn-sm">Copy</button>
+              </div>
+              <pre
+                id="event"
+                class="mt-3 font-mono text-sm leading-relaxed break-words whitespace-pre-wrap"
+              ><code>{ "id": "evt_...", "type": "invoice.paid", "createdAt": "...",
+  "data": { "invoice": { "id": "inv_...", "status": "paid", "amount": "5.00" }, "attempt": {} },
+  "proof": { "oneclickQuoteSignature": "...", "oneclickCorrelationId": "..." },
+  "proofVerified": true }</code></pre>
+            </div>
+            <dl class="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>data</code></dt>
+                <dd class="text-slate-body">
+                  The invoice and, for payment events, the payment attempt. The invoice includes your
+                  <code>metadata</code>.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>proof</code></dt>
+                <dd class="text-slate-body">
+                  The signature that NEAR Intents' 1Click API placed on the quote behind the payment. Present on payment
+                  and refund events.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>proofVerified</code></dt>
+                <dd class="text-slate-body">
+                  Whether Tilll verified <code>proof</code> against the 1Click public key. <code>false</code> is
+                  expected on a mock or test network. On the live network, treat it as a reason to investigate.
+                </dd>
+              </div>
+            </dl>
+
+            <h3 class="mt-8 text-xl font-bold">Verify the signature</h3>
+            <p class="mt-2 text-slate-body">
+              Each request carries the header <code>Tilll-Signature: t=&lt;unix seconds&gt;,v1=&lt;hex&gt;</code>.
+              <code>v1</code> is the HMAC-SHA256, keyed with <code>WEBHOOK_SECRET</code>, of
+              <code>"&lt;t&gt;.&lt;raw body&gt;"</code>. Compute it over the exact bytes you received, before parsing
+              the JSON, and reject a timestamp more than five minutes old.
+            </p>
+            <div class="on-dark mt-3 min-w-0 rounded-2xl bg-navy p-5 text-white">
+              <div class="flex items-center justify-between gap-3">
+                <h4 class="text-sm font-semibold text-slate-200">Your server (Node)</h4>
+                <button type="button" hidden data-copy="webhook" class="btn btn-outline-inverse btn-sm">Copy</button>
+              </div>
+              <pre
+                id="webhook"
+                class="mt-3 font-mono text-sm leading-relaxed break-words whitespace-pre-wrap"
+              ><code>import { createHmac, timingSafeEqual } from "node:crypto";
+
+function verify(secret, header, rawBody) {
+  const parts = Object.fromEntries(header.split(",").map((p) =&gt; p.trim().split("=")));
+  const expected = createHmac("sha256", secret).update(`${parts.t}.${rawBody}`).digest();
+  const given = Buffer.from(parts.v1 ?? "", "hex");
+  const fresh = Math.abs(Date.now() / 1000 - Number(parts.t)) &lt;= 300;
+  return fresh &amp;&amp; given.length === expected.length &amp;&amp; timingSafeEqual(expected, given);
+}
+
+// rawBody is the request body exactly as received.
+async function onWebhook(headers, rawBody) {
+  if (!verify(process.env.WEBHOOK_SECRET, headers["tilll-signature"] ?? "", rawBody)) return 400;
+
+  const event = JSON.parse(rawBody);
+  if (await db.events.seen(event.id)) return 200; // delivery is at least once
+
+  if (event.type === "invoice.paid") {
+    const invoice = event.data.invoice;
+    const order = await db.orders.findByInvoice(invoice.id);
+    if (order &amp;&amp; Number(invoice.amount) === Number(order.total)) await fulfil(order);
+  }
+  await db.events.mark(event.id);
+  return 200;
+}</code></pre>
+            </div>
+
+            <h3 class="mt-8 text-xl font-bold">Handle the event</h3>
+            <p class="mt-2 text-slate-body">Before you fulfil an order, confirm that:</p>
+            <ul class="mt-3 list-disc space-y-2 pl-6 text-slate-body marker:text-slate-body">
+              <li>The signature is valid and the timestamp is fresh.</li>
+              <li>The type is <code>invoice.paid</code> and the invoice id matches the one saved on the order.</li>
+              <li>The invoice amount equals the order total.</li>
+              <li>
+                You haven't processed this event before. Dedupe on the event <code>id</code>, which is also sent in the
+                <code>Tilll-Event-Id</code> header.
+              </li>
+            </ul>
+            <p class="mt-4 text-slate-body">
+              To check an invoice without a webhook, call <code>GET /v1/invoices/:id</code> from your server and confirm
+              that <code>status</code> is <code>paid</code>.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">Retries and duplicates</h3>
+            <p class="mt-2 text-slate-body">
+              Respond with any 2xx status to acknowledge an event. Otherwise Tilll retries after 1 minute, 5 minutes, 30
+              minutes, 2 hours and 6 hours, then stops. The dashboard lists every delivery and lets you resend one.
+              Delivery is at least once, so the same event can arrive more than once.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">Event types</h3>
+            <dl data-events class="mt-3 divide-y divide-line rounded-2xl border border-line bg-white">
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>invoice.paid</code></dt>
+                <dd class="text-slate-body">A payment completed on an open invoice. Fulfil the order on this event.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>invoice.expired</code></dt>
+                <dd class="text-slate-body">The invoice passed its expiry time with no payment on the way.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>invoice.canceled</code></dt>
+                <dd class="text-slate-body">The invoice was canceled before it was paid.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>payment.underpaid</code></dt>
+                <dd class="text-slate-body">A deposit arrived for less than the required amount.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>payment.refunded_by_network</code></dt>
+                <dd class="text-slate-body">The swap could not complete, and the deposit went back to the customer.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>payment.failed</code></dt>
+                <dd class="text-slate-body">The payment attempt failed.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>payment.duplicate_refunded</code></dt>
+                <dd class="text-slate-body">
+                  A payment arrived for an invoice that was already paid, expired or canceled. Tilll refunds it in full.
+                  <code>data.cause</code> is <code>invoice_already_paid</code>, <code>invoice_expired</code> or
+                  <code>invoice_canceled</code>.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>refund.succeeded</code></dt>
+                <dd class="text-slate-body">A refund reached the customer.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>refund.failed</code></dt>
+                <dd class="text-slate-body">A refund failed. The funds stay in your balance.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[17rem_minmax(0,1fr)] sm:gap-6">
+                <dt><code>ping</code></dt>
+                <dd class="text-slate-body">
+                  A test event, sent from the dashboard or by <code>POST /v1/webhooks/test</code>.
+                </dd>
+              </div>
+            </dl>
+
+            <h3 class="mt-8 text-xl font-bold">Test webhooks locally</h3>
+            <p class="mt-2 text-slate-body">
+              Run <code>pnpm webhook-receiver</code> with <code>WEBHOOK_SECRET</code> set, and point
+              <code>WEBHOOK_URL</code> at it. Then send a test event from the dashboard. The receiver prints each event
+              and whether its signature verified. Its source is a short verifier you can copy.
+            </p>
+          </section>
+
+          <!-- Refunds -->
+          <section id="refunds" aria-labelledby="refunds-title">
+            <h2 id="refunds-title" class="font-display text-3xl font-extrabold tracking-tight">Refunds</h2>
+            <p class="mt-4 text-slate-body">Refund a payment in full or in part, from the dashboard or the API.</p>
+
+            <h3 class="mt-8 text-xl font-bold">Create a refund</h3>
+            <p class="mt-2 text-slate-body">
+              Send <code>POST /v1/invoices/:id/refunds</code>. To see what the customer would receive first, send
+              <code>POST /v1/invoices/:id/refunds/preview</code>.
+            </p>
+            <dl data-params="refund" class="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>idempotencyKey</code>
+                  <span class="mt-1 block text-xs text-slate-body">string · Required</span>
+                </dt>
+                <dd class="text-slate-body">
+                  Any string up to 200 characters, unique for each refund. Repeating a request with the same key returns
+                  the original refund.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>amount</code>
+                  <span class="mt-1 block text-xs text-slate-body">string · Optional</span>
+                </dt>
+                <dd class="text-slate-body">
+                  The amount to refund, in settlement asset units. Defaults to the remaining refundable amount.
+                </dd>
+              </div>
+            </dl>
+
+            <h3 class="mt-8 text-xl font-bold">Refund amounts</h3>
+            <p class="mt-2 text-slate-body">
+              A refund is a new swap at the current price. The customer receives the value of the refund in the token
+              they paid with, which can be a different number of tokens than they sent. The refund goes to the refund
+              address they gave at checkout, on the chain they paid from.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">Limits</h3>
+            <p class="mt-2 text-slate-body">
+              Refunds are paid from your settlement balance, so the balance must cover them.
+              <code>REFUND_MAX_PER_TX</code> and <code>REFUND_MAX_PER_DAY</code> cap what the dashboard and API can
+              send. Both are in settlement asset units.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">Automatic refunds</h3>
+            <p class="mt-2 text-slate-body">
+              Tilll refunds a duplicate payment, or one that arrives after the invoice expired, in full and without a
+              request. It sends a <code>payment.duplicate_refunded</code> event. These refunds don't count toward the
+              daily limit.
+            </p>
+          </section>
+
+          <!-- Integration security -->
+          <section id="security" aria-labelledby="security-title">
+            <h2 id="security-title" class="font-display text-3xl font-extrabold tracking-tight">
+              Integration security
+            </h2>
+            <p class="mt-4 text-slate-body">
+              The checkout receives only an invoice id. The amount is fixed when your server creates the invoice, and
+              the public checkout endpoints accept only a token and a refund address. A customer can't change what an
+              invoice costs. To keep it that way, your integration has to meet four requirements.
+            </p>
+            <div class="mt-6 rounded-2xl border border-amber-ink/30 bg-amber-bg p-6">
+              <p class="text-sm font-bold tracking-wide text-amber-ink uppercase">Security requirements</p>
+              <ol class="mt-4 list-decimal space-y-4 pl-6 text-navy marker:font-semibold">
+                <li>
+                  <strong>Set amounts on your server.</strong> Create each invoice there, from your own catalogue. Never
+                  expose an endpoint that takes the amount from the browser.
+                </li>
+                <li>
+                  <strong>Link each invoice to an order.</strong> Save the invoice id on the order. When a payment
+                  arrives, look the order up by that id in your own database, not by an id the browser sends, and check
+                  the amount against the order total.
+                </li>
+                <li>
+                  <strong>Fulfil from webhooks, not from client callbacks.</strong> Fulfil an order only after a
+                  verified <code>invoice.paid</code> webhook, or after your server reads the invoice and finds it
+                  <code>paid</code>. <code>onPaid</code> runs in the browser and can be spoofed.
+                </li>
+                <li>
+                  <strong>Keep secrets on your server.</strong> Never put <code>MERCHANT_SECRET</code> in page code. A
+                  site with no server can still sell: create each invoice in the dashboard and share its payment link.
+                </li>
+              </ol>
+            </div>
+            <h3 class="mt-8 text-xl font-bold">Protect the settlement key</h3>
+            <p class="mt-2 text-slate-body">
+              <code>SETTLEMENT_PRIVATE_KEY</code> can spend the settlement account's balance. Use a dedicated account,
+              keep only what you need in it, and sweep it regularly. Tilll signs only the refund it requested, and
+              refuses every other kind of intent.
+            </p>
+          </section>
+
+          <!-- Go-live checklist -->
+          <section id="go-live" aria-labelledby="go-live-title">
+            <h2 id="go-live-title" class="font-display text-3xl font-extrabold tracking-tight">Go-live checklist</h2>
+            <p class="mt-4 text-slate-body">Complete these steps before you accept real payments.</p>
+            <ul class="mt-6 space-y-4">
+              <li class="flex gap-3">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="icon mt-0.5 h-5 w-5 shrink-0 text-navy"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m5 12 5 5 9-10" />
+                </svg>
+                <p class="text-slate-body">
+                  <strong class="text-navy">Serve Tilll over https.</strong> Tilll listens on <code>127.0.0.1</code>.
+                  Put a reverse proxy with a certificate in front of it, and set <code>PUBLIC_BASE_URL</code> to the
+                  https address.
+                </p>
+              </li>
+              <li class="flex gap-3">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="icon mt-0.5 h-5 w-5 shrink-0 text-navy"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m5 12 5 5 9-10" />
+                </svg>
+                <p class="text-slate-body">
+                  <strong class="text-navy">Set <code>TRUST_PROXY=1</code>.</strong> Otherwise every visitor shares the
+                  proxy's address, and the rate limits apply to all of them together.
+                </p>
+              </li>
+              <li class="flex gap-3">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="icon mt-0.5 h-5 w-5 shrink-0 text-navy"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m5 12 5 5 9-10" />
+                </svg>
+                <p class="text-slate-body">
+                  <strong class="text-navy">Restrict <code>ALLOWED_ORIGINS</code></strong> to your shop's origin, so
+                  only your site can call the checkout.
+                </p>
+              </li>
+              <li class="flex gap-3">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="icon mt-0.5 h-5 w-5 shrink-0 text-navy"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m5 12 5 5 9-10" />
+                </svg>
+                <p class="text-slate-body">
+                  <strong class="text-navy">Use a dedicated settlement account.</strong> Keep only the balance you need
+                  to cover refunds, and sweep the rest.
+                </p>
+              </li>
+              <li class="flex gap-3">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="icon mt-0.5 h-5 w-5 shrink-0 text-navy"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m5 12 5 5 9-10" />
+                </svg>
+                <p class="text-slate-body">
+                  <strong class="text-navy">Point <code>WEBHOOK_URL</code> at your server</strong> and send a test event
+                  from the dashboard. Confirm that your server verifies the signature.
+                </p>
+              </li>
+              <li class="flex gap-3">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="icon mt-0.5 h-5 w-5 shrink-0 text-navy"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m5 12 5 5 9-10" />
+                </svg>
+                <p class="text-slate-body">
+                  <strong class="text-navy">Make one small live payment and refund it.</strong>
+                  <a data-needs="github" href="{{github}}#real-payment-mainnet" rel="noopener" class="link"
+                    >The README lists the steps.</a
+                  >
+                </p>
+              </li>
+            </ul>
+            <div class="mt-6 rounded-xl border border-blue-ink/25 bg-blue-bg p-4 text-sm text-navy">
+              <p>
+                <strong class="text-blue-ink">Note.</strong> Tilll is tested against mocks, a test network and recorded
+                live quotes. Its author hasn't yet run a payment on mainnet, and settlement assets other than the USDC
+                default haven't been tested end to end. The live payment above is how you confirm your own setup.
+              </p>
+            </div>
+          </section>
+
+          <!-- Configuration -->
+          <section id="configuration" aria-labelledby="configuration-title">
+            <h2 id="configuration-title" class="font-display text-3xl font-extrabold tracking-tight">Configuration</h2>
+            <p class="mt-4 text-slate-body">
+              Tilll reads its settings from environment variables, usually in <code>.env</code>.
+              <code>pnpm tilll init</code> generates the secrets, and every other setting has a default. A bad setting
+              stops startup with a message that names the setting, never its value.
+            </p>
+            <dl data-settings class="mt-6 divide-y divide-line rounded-2xl border border-line bg-white">
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>PUBLIC_BASE_URL</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: http://localhost:8080</span>
+                </dt>
+                <dd class="text-slate-body">
+                  Where customers reach Tilll, such as <code>https://pay.example.com</code>. Used to build payment
+                  links.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>ALLOWED_ORIGINS</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: *</span>
+                </dt>
+                <dd class="text-slate-body">
+                  Comma-separated origins allowed to call the checkout, such as <code>https://shop.example.com</code>.
+                  No path. Set this in production.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>TRUST_PROXY</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: false</span>
+                </dt>
+                <dd class="text-slate-body">
+                  Set to <code>1</code> when exactly one reverse proxy sits in front of Tilll.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>MERCHANT_SECRET</code>
+                  <span class="mt-1 block text-xs text-slate-body">Generated by init</span>
+                </dt>
+                <dd class="text-slate-body">
+                  Authorizes <code>/v1/*</code> and the dashboard sign-in. Changing it ends every dashboard session.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>WEBHOOK_URL</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: http://localhost:9000/hooks/tilll</span>
+                </dt>
+                <dd class="text-slate-body">The endpoint on your server that receives events.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>WEBHOOK_SECRET</code>
+                  <span class="mt-1 block text-xs text-slate-body">Generated by init</span>
+                </dt>
+                <dd class="text-slate-body">The key that signs every event.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>SETTLEMENT_ACCOUNT_ID</code>
+                  <span class="mt-1 block text-xs text-slate-body">Generated by init</span>
+                </dt>
+                <dd class="text-slate-body">The NEAR account whose NEAR Intents balance receives your payments.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>SETTLEMENT_PRIVATE_KEY</code>
+                  <span class="mt-1 block text-xs text-slate-body">Generated by init</span>
+                </dt>
+                <dd class="text-slate-body">
+                  Signs refunds. It can spend the settlement balance, so it never leaves your server.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>SETTLEMENT_ASSET_ID</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: USDC on NEAR</span>
+                </dt>
+                <dd class="text-slate-body">
+                  The asset you are paid in: any asset id that the 1Click API lists. Tilll checks it at startup. Invoice
+                  amounts, refunds and refund limits are all in this asset.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>ONECLICK_API_KEY</code>
+                  <span class="mt-1 block text-xs text-slate-body">Optional</span>
+                </dt>
+                <dd class="text-slate-body">
+                  A partner key for the 1Click API. Without one, 1Click may add a platform fee to quotes.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>ATTEMPT_DEADLINE_MINUTES</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: 30</span>
+                </dt>
+                <dd class="text-slate-body">
+                  How long a customer has to send a payment. Bitcoin-like chains always get 120.
+                </dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>REFUND_MAX_PER_TX</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: 50</span>
+                </dt>
+                <dd class="text-slate-body">The largest single refund, in settlement asset units.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>REFUND_MAX_PER_DAY</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: 200</span>
+                </dt>
+                <dd class="text-slate-body">The most you can refund in one UTC day, in settlement asset units.</dd>
+              </div>
+              <div class="grid gap-1 p-4 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-6">
+                <dt>
+                  <code>EXTRA_CHAINS</code>
+                  <span class="mt-1 block text-xs text-slate-body">Default: none</span>
+                </dt>
+                <dd class="text-slate-body">
+                  More chains to offer at checkout, for example <code>ltc,doge</code>. Limited to chains the 1Click API
+                  lists.
+                </dd>
+              </div>
+            </dl>
+            <p class="mt-4 text-slate-body">
+              <a data-needs="github" href="{{github}}#configuration" rel="noopener" class="link"
+                >The README lists every setting.</a
+              >
+            </p>
+          </section>
+
+          <!-- API reference -->
+          <section id="api" aria-labelledby="api-title">
+            <h2 id="api-title" class="font-display text-3xl font-extrabold tracking-tight">API reference</h2>
+            <p class="mt-4 text-slate-body">
+              Use the merchant API to create invoices, issue refunds and read your balance from your server.
+            </p>
+
+            <h3 class="mt-6 text-xl font-bold">Authentication</h3>
+            <p class="mt-2 text-slate-body">
+              Send the merchant secret as a bearer token on every <code>/v1/*</code> request:
+              <code>Authorization: Bearer &lt;MERCHANT_SECRET&gt;</code>. The <code>/pay/*</code> endpoints serve the
+              checkout. They need no secret and are rate limited for each visitor.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">Conventions</h3>
+            <p class="mt-2 text-slate-body">
+              Amounts are strings in display units, such as <code>"5.00"</code>. Responses also include the exact
+              base-unit amounts. Errors use standard HTTP status codes and return a JSON body of the form
+              <code>{ "error": { "code", "message" } }</code>.
+            </p>
+
+            <h3 class="mt-8 text-xl font-bold">Endpoints</h3>
+            <ul class="mt-3 divide-y divide-line rounded-2xl border border-line bg-white">
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-navy px-2 py-0.5 text-xs font-bold text-white">POST</span>
+                  <code>/v1/invoices</code>
+                </div>
+                <p class="mt-2 text-slate-body">Create an invoice. Returns the invoice and its <code>payUrl</code>.</p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-navy">GET</span>
+                  <code>/v1/invoices</code>
+                </div>
+                <p class="mt-2 text-slate-body">
+                  List invoices, newest first. Filter with <code>status</code> and <code>q</code>, and page with
+                  <code>limit</code> and <code>cursor</code>.
+                </p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-navy">GET</span>
+                  <code>/v1/invoices/:id</code>
+                </div>
+                <p class="mt-2 text-slate-body">Retrieve an invoice with its payment attempts and refunds.</p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-navy px-2 py-0.5 text-xs font-bold text-white">POST</span>
+                  <code>/v1/invoices/:id/cancel</code>
+                </div>
+                <p class="mt-2 text-slate-body">Cancel an open invoice that has no payment on the way.</p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-navy px-2 py-0.5 text-xs font-bold text-white">POST</span>
+                  <code>/v1/invoices/:id/refunds/preview</code>
+                </div>
+                <p class="mt-2 text-slate-body">
+                  Preview a refund: what the customer would receive, and where. Takes an optional
+                  <code>amount</code>.
+                </p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-navy px-2 py-0.5 text-xs font-bold text-white">POST</span>
+                  <code>/v1/invoices/:id/refunds</code>
+                </div>
+                <p class="mt-2 text-slate-body">
+                  Create a refund. Takes <code>idempotencyKey</code> and an optional <code>amount</code>.
+                </p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-navy">GET</span>
+                  <code>/v1/balance</code>
+                </div>
+                <p class="mt-2 text-slate-body">Retrieve your settlement balance.</p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-navy">GET</span>
+                  <code>/v1/webhooks</code>
+                </div>
+                <p class="mt-2 text-slate-body">List webhook deliveries.</p>
+              </li>
+              <li data-route class="p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span data-method class="rounded-md bg-navy px-2 py-0.5 text-xs font-bold text-white">POST</span>
+                  <code>/v1/webhooks/test</code>
+                </div>
+                <p class="mt-2 text-slate-body">Send a <code>ping</code> event to <code>WEBHOOK_URL</code>.</p>
+              </li>
+            </ul>
+            <p class="mt-4 text-slate-body">
+              <a data-needs="github" href="{{github}}#api" rel="noopener" class="link"
+                >The README lists every endpoint.</a
+              >
+            </p>
+          </section>
+
+          <!-- Privacy and limitations -->
+          <section id="privacy" aria-labelledby="privacy-title">
+            <h2 id="privacy-title" class="font-display text-3xl font-extrabold tracking-tight">
+              Privacy and limitations
+            </h2>
+            <p class="mt-4 text-slate-body">What Tilll collects, who can see a payment, and what Tilll doesn't do.</p>
+
+            <h3 class="mt-6 text-xl font-bold">Privacy</h3>
+            <ul class="mt-3 list-disc space-y-2 pl-6 text-slate-body marker:text-slate-body">
+              <li>
+                The checkout asks for no name, email or account, sets no cookie, and loads nothing from other hosts.
+              </li>
+              <li>
+                NEAR Intents' 1Click API receives each quote request, including the customer's refund address.
+                Blockchain transactions are public.
+              </li>
+              <li>Invoices, payment attempts and refund addresses are stored in your own database.</li>
+            </ul>
+
+            <h3 class="mt-8 text-xl font-bold">Limitations</h3>
+            <ul class="mt-3 list-disc space-y-2 pl-6 text-slate-body marker:text-slate-body">
+              <li>One deployment serves one merchant. Fiat, cards, KYC and subscriptions aren't supported.</li>
+              <li>
+                Refunds return the value at the current price. They depend on route availability, and a very small
+                refund may not be possible.
+              </li>
+              <li>Address checks validate format only. The 1Click API makes the final decision.</li>
+              <li>Tilll depends on the 1Click API and on one NEAR RPC endpoint being reachable.</li>
+            </ul>
+            <p class="mt-4 text-slate-body">
+              Read more in the README:
+              <a data-needs="github" href="{{github}}#privacy" rel="noopener" class="link">Privacy</a>,
+              <a data-needs="github" href="{{github}}#security" rel="noopener" class="link">Security</a> and
+              <a data-needs="github" href="{{github}}#limitations" rel="noopener" class="link">Limitations</a>.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="border-t border-line">
+      <div class="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 md:grid-cols-[2fr_1fr_1fr]">
+        <div>
+          <div class="flex items-center gap-2">
+            <img src="./tilll-mark.svg" alt="" width="28" height="28" class="h-7 w-7" />
+            <span class="font-display text-xl font-extrabold tracking-tighter">tilll</span>
+          </div>
+          <p class="mt-3 max-w-sm text-sm text-slate-body">A crypto checkout you run yourself.</p>
+        </div>
+        <nav aria-label="Product">
+          <h2 class="text-sm font-bold">Product</h2>
+          <ul class="mt-3 space-y-2 text-sm text-slate-body">
+            <li><a href="./#features" class="hover:text-navy">Features</a></li>
+            <li><a href="./#how" class="hover:text-navy">How it works</a></li>
+            <li><a href="./#developers" class="hover:text-navy">Developers</a></li>
+            <li><a href="./#self-host" class="hover:text-navy">Self-host</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Resources">
+          <h2 class="text-sm font-bold">Resources</h2>
+          <ul class="mt-3 space-y-2 text-sm text-slate-body">
+            <li><a href="./docs.html" class="hover:text-navy">Docs</a></li>
+            <li data-needs="github"><a href="{{github}}" rel="noopener" class="hover:text-navy">Source code</a></li>
+            <li>
+              <a href="https://docs.near-intents.org" rel="noopener" class="hover:text-navy">NEAR Intents docs</a>
+            </li>
+            <li data-needs="github">
+              <a href="{{github}}#license" rel="noopener" class="hover:text-navy">MIT License</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <p class="border-t border-line px-4 py-5 text-center text-sm text-slate-body sm:px-6">
+        MIT licensed · Powered by NEAR Intents
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Emerald marks something live or healthy (a status dot, a progress bar). It is never a button or a link. */
+  --color-brand: #059669;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-disabled: var(--disabled);
+  --color-disabled-foreground: var(--disabled-foreground);
+  --color-ring: var(--ring);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-solid: var(--danger-solid);
+  --color-danger-solid-hover: var(--danger-solid-hover);
+  --color-danger-solid-active: var(--danger-solid-active);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+  --radius-lg: 0.75rem;
+  --radius-md: 0.5rem;
+  --radius-sm: 0.375rem;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: Manrope, Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  --background: #fafafa;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  --primary: #0b1f3a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1e3a5f;
+  --primary-active: #071426;
+  --disabled: #e2e8f0;
+  --disabled-foreground: #94a3b8;
+  --ring: #6366f1;
+  --danger: #b91c1c;
+  --danger-bg: #fef2f2;
+  --danger-solid: #b91c1c;
+  --danger-solid-hover: #991b1b;
+  --danger-solid-active: #7f1d1d;
+  --success: #047857;
+  --success-bg: #ecfdf5;
+  --warning: #b45309;
+  --warning-bg: #fffbeb;
+  --info: #1d4ed8;
+  --info-bg: #eff6ff;
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #111113;
+  --muted: #1c1c1f;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
+  --primary: #2b4c7e;
+  --primary-foreground: #ffffff;
+  --primary-hover: #345c96;
+  --primary-active: #24416c;
+  --disabled: #27272a;
+  --disabled-foreground: #71717a;
+  --ring: #818cf8;
+  --danger: #fca5a5;
+  --danger-bg: #2a1212;
+  --success: #6ee7b7;
+  --success-bg: #0b2a20;
+  --warning: #fcd34d;
+  --warning-bg: #2a2008;
+  --info: #93c5fd;
+  --info-bg: #0f1d3a;
+}
+
+html {
+  color-scheme: light dark;
+}
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+dialog {
+  color: inherit;
+}
+dialog::backdrop {
+  background: rgb(9 9 11 / 0.6);
+}

@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Tilll · Get paid in crypto, from any chain</title>
+    <meta
+      name="description"
+      content="Tilll is a free, open-source checkout you run yourself. Customers pay from any chain and you get paid straight into your own account. Powered by NEAR Intents."
+    />
+    <meta name="theme-color" content="#0b1f3a" />
+    <meta property="og:title" content="Tilll · Get paid in crypto, from any chain" />
+    <meta property="og:description" content="A free, open-source checkout you run yourself. Powered by NEAR Intents." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script type="module" src="./src/site.ts"></script>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-navy focus:px-4 focus:py-2 focus:text-white"
+      >Skip to content</a
+    >
+
+    <header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6">
+        <a href="#top" class="flex items-center gap-2" aria-label="Tilll, back to the top">
+          <img src="./tilll-mark.svg" alt="" width="32" height="32" class="h-8 w-8" />
+          <span class="font-display text-2xl font-extrabold tracking-tighter">tilll</span>
+        </a>
+        <nav
+          aria-label="Main"
+          class="order-last flex w-full gap-5 overflow-x-auto text-sm font-medium text-slate-body sm:order-none sm:w-auto"
+        >
+          <a href="#features" class="whitespace-nowrap hover:text-navy">Features</a>
+          <a href="#how" class="whitespace-nowrap hover:text-navy">How it works</a>
+          <a href="#developers" class="whitespace-nowrap hover:text-navy">Developers</a>
+          <a href="#self-host" class="whitespace-nowrap hover:text-navy">Self-host</a>
+          <a href="./docs.html" class="whitespace-nowrap hover:text-navy">Docs</a>
+        </nav>
+        <a data-needs="github" href="{{github}}" rel="noopener" class="btn btn-primary btn-sm ml-auto">GitHub</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero -->
+      <section
+        id="top"
+        aria-labelledby="hero-title"
+        class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2"
+      >
+        <div>
+          <p
+            class="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold tracking-wide text-slate-body"
+          >
+            Open source · Self-hosted
+          </p>
+          <h1
+            id="hero-title"
+            class="mt-5 font-display text-4xl leading-tight font-extrabold tracking-tight sm:text-5xl"
+          >
+            Get paid in crypto, from any chain.
+          </h1>
+          <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-body">
+            Free, open source, self-hosted. Powered by NEAR Intents.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#self-host" class="btn btn-primary">Self-host in 5 minutes</a>
+            <a data-needs="github" href="{{github}}" rel="noopener" class="btn btn-secondary">View on GitHub</a>
+          </div>
+          <p class="mt-8 text-sm font-semibold text-slate-body">Customers pay from</p>
+          <ul
+            aria-label="Chains the checkout offers"
+            class="mt-3 flex flex-wrap gap-2 text-sm font-medium text-slate-body"
+          >
+            <li data-chip class="rounded-full border border-line px-3 py-1">Ethereum</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Base</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Arbitrum</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Optimism</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Polygon</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">BNB Chain</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Avalanche</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Solana</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">NEAR</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Bitcoin</li>
+            <li data-chip class="rounded-full border border-line px-3 py-1">Tron</li>
+            <li class="rounded-full px-3 py-1 text-slate-body">and more</li>
+          </ul>
+        </div>
+
+        <!-- A static picture of the checkout window. Nothing here is live. -->
+        <figure data-illustration class="mx-auto w-full max-w-sm lg:mx-0 lg:ml-auto">
+          <div class="overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-line" aria-hidden="true">
+            <div class="flex items-center gap-3 border-b border-line px-4 py-3">
+              <span class="flex h-8 w-8 items-center justify-center rounded-full text-lg text-slate-body">←</span>
+              <span class="flex-1 text-center text-sm font-semibold">Send payment</span>
+              <span class="flex h-8 w-8 items-center justify-center rounded-full text-lg text-slate-body">×</span>
+            </div>
+            <div class="flex gap-1.5 px-5 pt-3">
+              <span class="h-1 flex-1 rounded-full bg-navy"></span>
+              <span class="h-1 flex-1 rounded-full bg-navy"></span>
+              <span class="h-1 flex-1 rounded-full bg-navy"></span>
+              <span class="h-1 flex-1 rounded-full bg-navy"></span>
+            </div>
+            <div class="px-5 pt-4 pb-5 text-center">
+              <p class="text-xs font-bold tracking-wide text-slate-body uppercase">Send exactly</p>
+              <p class="mt-1 font-mono text-3xl font-extrabold tracking-tight">5.0511 USDC</p>
+              <p class="mt-1 text-sm text-slate-body">on Base</p>
+              <svg
+                viewBox="0 0 25 25"
+                class="mx-auto mt-4 h-36 w-36 rounded-xl border border-line p-2"
+                focusable="false"
+              >
+                <path
+                  class="fill-navy"
+                  d="M0 0h7v1h-7zM8 0h1v1h-1zM10 0h1v1h-1zM14 0h3v1h-3zM18 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h2v1h-2zM11 1h1v1h-1zM13 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM10 2h1v1h-1zM13 2h1v1h-1zM16 2h1v1h-1zM18 2h1v1h-1zM20 2h3v1h-3zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM20 3h3v1h-3zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h2v1h-2zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h3v1h-3zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h2v1h-2zM14 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h7v1h-7zM10 7h1v1h-1zM14 7h3v1h-3zM0 8h1v1h-1zM3 8h2v1h-2zM6 8h1v1h-1zM8 8h1v1h-1zM10 8h3v1h-3zM14 8h1v1h-1zM17 8h4v1h-4zM23 8h1v1h-1zM0 9h2v1h-2zM3 9h1v1h-1zM5 9h1v1h-1zM8 9h5v1h-5zM15 9h2v1h-2zM19 9h1v1h-1zM3 10h1v1h-1zM5 10h2v1h-2zM9 10h3v1h-3zM14 10h1v1h-1zM16 10h1v1h-1zM21 10h4v1h-4zM3 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM11 11h2v1h-2zM16 11h1v1h-1zM20 11h3v1h-3zM0 12h1v1h-1zM3 12h1v1h-1zM5 12h2v1h-2zM8 12h1v1h-1zM13 12h1v1h-1zM17 12h1v1h-1zM20 12h5v1h-5zM4 13h2v1h-2zM8 13h1v1h-1zM10 13h1v1h-1zM15 13h1v1h-1zM18 13h1v1h-1zM20 13h1v1h-1zM1 14h2v1h-2zM4 14h1v1h-1zM6 14h4v1h-4zM11 14h1v1h-1zM14 14h3v1h-3zM23 14h2v1h-2zM5 15h1v1h-1zM9 15h4v1h-4zM15 15h3v1h-3zM20 15h5v1h-5zM1 16h2v1h-2zM4 16h3v1h-3zM10 16h2v1h-2zM13 16h5v1h-5zM21 16h4v1h-4zM8 17h1v1h-1zM11 17h1v1h-1zM13 17h6v1h-6zM21 17h1v1h-1zM23 17h2v1h-2zM0 18h7v1h-7zM8 18h3v1h-3zM12 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM19 18h3v1h-3zM23 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h3v1h-3zM12 19h1v1h-1zM18 19h1v1h-1zM20 19h2v1h-2zM23 19h1v1h-1zM0 20h1v1h-1zM2 20h3v1h-3zM6 20h1v1h-1zM11 20h3v1h-3zM15 20h1v1h-1zM20 20h1v1h-1zM22 20h3v1h-3zM0 21h1v1h-1zM2 21h3v1h-3zM6 21h1v1h-1zM8 21h2v1h-2zM13 21h3v1h-3zM18 21h2v1h-2zM22 21h3v1h-3zM0 22h1v1h-1zM2 22h3v1h-3zM6 22h1v1h-1zM8 22h1v1h-1zM10 22h1v1h-1zM14 22h1v1h-1zM17 22h2v1h-2zM20 22h1v1h-1zM22 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM10 23h2v1h-2zM13 23h4v1h-4zM19 23h1v1h-1zM21 23h1v1h-1zM23 23h1v1h-1zM0 24h7v1h-7zM13 24h2v1h-2zM16 24h2v1h-2zM21 24h1v1h-1zM23 24h2v1h-2z"
+                />
+              </svg>
+              <div class="mt-4 flex items-center gap-2 rounded-xl border border-line bg-slate-50 px-3 py-2 text-left">
+                <span class="min-w-0 flex-1 truncate font-mono text-xs text-slate-body">0x… deposit address</span>
+                <span class="rounded-md border border-line bg-white px-2 py-1 text-xs font-semibold">Copy</span>
+              </div>
+              <p class="mt-4 flex items-center justify-center gap-2 text-sm font-semibold">
+                <span class="inline-block h-2.5 w-2.5 rounded-full bg-brand"></span>
+                Waiting for your payment…
+              </p>
+            </div>
+            <p class="border-t border-line bg-slate-50 px-5 py-3 text-center text-xs text-slate-body">
+              Powered by Tilll · Settled by NEAR Intents
+            </p>
+          </div>
+          <figcaption class="mt-3 text-center text-xs text-slate-body">Illustration of the checkout window.</figcaption>
+        </figure>
+      </section>
+
+      <!-- Values -->
+      <section id="values" aria-labelledby="values-title" class="border-t border-line bg-slate-50">
+        <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <h2 id="values-title" class="font-display text-3xl font-extrabold tracking-tight">Built to be yours</h2>
+          <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-navy">
+                <svg viewBox="0 0 24 24" class="icon h-6 w-6" aria-hidden="true" focusable="false">
+                  <rect x="3" y="4" width="18" height="6" rx="2" />
+                  <rect x="3" y="14" width="18" height="6" rx="2" />
+                  <path d="M7 7h.01M7 17h.01" />
+                </svg>
+              </span>
+              <h3 class="mt-4 text-lg font-bold">Self-hosted</h3>
+              <p class="mt-2 text-slate-body">Runs on your server. Your keys, your data.</p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-navy">
+                <svg viewBox="0 0 24 24" class="icon h-6 w-6" aria-hidden="true" focusable="false">
+                  <path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14" />
+                </svg>
+              </span>
+              <h3 class="mt-4 text-lg font-bold">Open source</h3>
+              <p class="mt-2 text-slate-body">MIT licensed. Read it, change it, fork it.</p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-navy">
+                <svg viewBox="0 0 24 24" class="icon h-6 w-6" aria-hidden="true" focusable="false">
+                  <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" />
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M4 4l16 16" />
+                </svg>
+              </span>
+              <h3 class="mt-4 text-lg font-bold">Private</h3>
+              <p class="mt-2 text-slate-body">Customers give no name, email or account.</p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-navy">
+                <svg viewBox="0 0 24 24" class="icon h-6 w-6" aria-hidden="true" focusable="false">
+                  <rect x="5" y="11" width="14" height="9" rx="2" />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                </svg>
+              </span>
+              <h3 class="mt-4 text-lg font-bold">Secure</h3>
+              <p class="mt-2 text-slate-body">Your keys never leave your server.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section id="how" aria-labelledby="how-title" class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <h2 id="how-title" class="font-display text-3xl font-extrabold tracking-tight">How it works</h2>
+        <ol class="mt-10 grid gap-5 md:grid-cols-3">
+          <li class="rounded-2xl border border-line bg-white p-6">
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-navy font-bold text-white"
+              aria-hidden="true"
+              >1</span
+            >
+            <h3 class="mt-4 text-lg font-bold">Install it</h3>
+            <p class="mt-2 text-slate-body">Four commands. Nothing to sign up for.</p>
+          </li>
+          <li class="rounded-2xl border border-line bg-white p-6">
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-navy font-bold text-white"
+              aria-hidden="true"
+              >2</span
+            >
+            <h3 class="mt-4 text-lg font-bold">Add the checkout</h3>
+            <p class="mt-2 text-slate-body">Share a pay link, or add the checkout to your page.</p>
+          </li>
+          <li class="rounded-2xl border border-line bg-white p-6">
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-navy font-bold text-white"
+              aria-hidden="true"
+              >3</span
+            >
+            <h3 class="mt-4 text-lg font-bold">Get paid</h3>
+            <p class="mt-2 text-slate-body">Money lands straight in your own account.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Features -->
+      <section id="features" aria-labelledby="features-title" class="border-t border-line bg-slate-50">
+        <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <h2 id="features-title" class="font-display text-3xl font-extrabold tracking-tight">Everything you need</h2>
+          <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold">Invoices and pay links</h3>
+              <p class="mt-2 text-sm text-slate-body">Create an invoice, share the link.</p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold">Checkout for your site</h3>
+              <p class="mt-2 text-sm text-slate-body">Customers pay without leaving your page.</p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold">A dashboard</h3>
+              <p class="mt-2 text-sm text-slate-body">Balance, invoices and refunds in one place.</p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold">Webhooks</h3>
+              <p class="mt-2 text-sm text-slate-body">Your server hears about every payment.</p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold">Refunds</h3>
+              <p class="mt-2 text-sm text-slate-body">
+                Refund on the original chain. Refunds return the value at today's price.
+              </p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold">Duplicate and late payments</h3>
+              <p class="mt-2 text-sm text-slate-body">Sent back to the customer automatically.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Developers -->
+      <section id="developers" aria-labelledby="dev-title" class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <h2 id="dev-title" class="font-display text-3xl font-extrabold tracking-tight">For developers</h2>
+        <p class="mt-3 max-w-2xl text-slate-body">
+          Create invoices from your server. Open the checkout with one script tag.
+        </p>
+        <div class="on-dark mt-8 grid gap-5 lg:grid-cols-2">
+          <div class="min-w-0 rounded-2xl bg-navy p-5 text-white">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-sm font-semibold text-slate-200">Embed the checkout</h3>
+              <button type="button" hidden data-copy="embed" class="btn btn-outline-inverse btn-sm">Copy</button>
+            </div>
+            <pre
+              id="embed"
+              class="mt-3 font-mono text-sm leading-relaxed break-words whitespace-pre-wrap"
+            ><code>&lt;script src="https://pay.example.com/checkout.js"&gt;&lt;/script&gt;
+&lt;button data-tilll-invoice="inv_..."&gt;Pay with crypto&lt;/button&gt;</code></pre>
+          </div>
+          <div class="min-w-0 rounded-2xl bg-navy p-5 text-white">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-sm font-semibold text-slate-200">Create an invoice</h3>
+              <button type="button" hidden data-copy="curl" class="btn btn-outline-inverse btn-sm">Copy</button>
+            </div>
+            <pre
+              id="curl"
+              class="mt-3 font-mono text-sm leading-relaxed break-words whitespace-pre-wrap"
+            ><code>curl -X POST https://pay.example.com/v1/invoices \
+  -H "Authorization: Bearer $MERCHANT_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"amount":"5.00","description":"Order 1042"}'</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Self-host -->
+      <section id="self-host" aria-labelledby="host-title" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <div class="on-dark rounded-3xl bg-navy px-6 py-12 text-white sm:px-12">
+          <h2 id="host-title" class="font-display text-3xl font-extrabold tracking-tight">Self-host in 5 minutes</h2>
+          <p class="mt-3 max-w-2xl text-slate-300">Four commands and a dashboard. No funds needed.</p>
+          <div class="mt-8 min-w-0 rounded-2xl bg-black/30 p-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-sm font-semibold text-slate-200">Terminal</h3>
+              <button type="button" hidden data-copy="setup" class="btn btn-outline-inverse btn-sm">Copy</button>
+            </div>
+            <pre
+              id="setup"
+              class="mt-3 font-mono text-sm leading-loose break-words whitespace-pre-wrap"
+            ><code>git clone {{cloneTarget}} tilll &amp;&amp; cd tilll
+pnpm install
+pnpm tilll init
+docker compose up --build</code></pre>
+          </div>
+          <p class="mt-6 text-slate-200">
+            Then open <code class="font-mono text-sm">http://localhost:8080/dashboard</code> and log in with the secret
+            in <code class="font-mono text-sm">.env</code>.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="./docs.html" class="btn btn-inverse">Read the docs</a>
+            <a data-needs="github" href="{{github}}" rel="noopener" class="btn btn-outline-inverse">View on GitHub</a>
+            <a data-needs="demoVideo" href="{{demoVideo}}" rel="noopener" class="btn btn-outline-inverse"
+              >Watch the demo</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-line">
+      <div class="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 md:grid-cols-[2fr_1fr_1fr]">
+        <div>
+          <div class="flex items-center gap-2">
+            <img src="./tilll-mark.svg" alt="" width="28" height="28" class="h-7 w-7" />
+            <span class="font-display text-xl font-extrabold tracking-tighter">tilll</span>
+          </div>
+          <p class="mt-3 max-w-sm text-sm text-slate-body">A crypto checkout you run yourself.</p>
+        </div>
+        <nav aria-label="Product">
+          <h2 class="text-sm font-bold">Product</h2>
+          <ul class="mt-3 space-y-2 text-sm text-slate-body">
+            <li><a href="#features" class="hover:text-navy">Features</a></li>
+            <li><a href="#how" class="hover:text-navy">How it works</a></li>
+            <li><a href="#developers" class="hover:text-navy">Developers</a></li>
+            <li><a href="#self-host" class="hover:text-navy">Self-host</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Resources">
+          <h2 class="text-sm font-bold">Resources</h2>
+          <ul class="mt-3 space-y-2 text-sm text-slate-body">
+            <li data-needs="github"><a href="{{github}}" rel="noopener" class="hover:text-navy">Source code</a></li>
+            <li data-needs="github">
+              <a href="{{github}}#api" rel="noopener" class="hover:text-navy">API reference</a>
+            </li>
+            <li data-needs="github">
+              <a href="{{github}}#webhooks" rel="noopener" class="hover:text-navy">Webhooks</a>
+            </li>
+            <li data-needs="github"><a href="{{github}}#privacy" rel="noopener" class="hover:text-navy">Privacy</a></li>
+            <li data-needs="github">
+              <a href="{{github}}#security" rel="noopener" class="hover:text-navy">Security</a>
+            </li>
+            <li data-needs="demoVideo">
+              <a href="{{demoVideo}}" rel="noopener" class="hover:text-navy">Demo video</a>
+            </li>
+            <li><a href="./docs.html" class="hover:text-navy">Docs</a></li>
+            <li>
+              <a href="https://docs.near-intents.org" rel="noopener" class="hover:text-navy">NEAR Intents docs</a>
+            </li>
+            <li data-needs="github">
+              <a href="{{github}}#license" rel="noopener" class="hover:text-navy">MIT License</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <p class="border-t border-line px-4 py-5 text-center text-sm text-slate-body sm:px-6">
+        MIT licensed · Powered by NEAR Intents
+      </p>
+    </footer>
+  </body>
+</html>
