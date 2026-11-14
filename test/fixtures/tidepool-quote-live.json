@@ -1,0 +1,35 @@
+{
+  "correlationId": "441e4488-f629-4ca8-9874-ec1c9029fa4e",
+  "timestamp": "2026-11-07T11:23:13.906Z",
+  "quoteRequest": {
+    "dry": false,
+    "swapType": "EXACT_OUTPUT",
+    "slippageTolerance": 100,
+    "originAsset": "nep141:usdt.tidepool-sandbox.testnet",
+    "depositType": "ORIGIN_CHAIN",
+    "destinationAsset": "nep141:usdc.tidepool-sandbox.testnet",
+    "amount": "3000000",
+    "refundTo": "till-test-payer-5e194c.testnet",
+    "refundType": "ORIGIN_CHAIN",
+    "recipient": "686655639be946d49712b82d906e328779a7ff6485db02fabe980636ce9f7839",
+    "recipientType": "INTENTS",
+    "deadline": "2026-11-07T11:53:13.722Z",
+    "depositMode": "SIMPLE",
+    "referral": "till"
+  },
+  "quote": {
+    "amountIn": "3031729",
+    "amountInFormatted": "3.031729",
+    "amountInUsd": "3.0294",
+    "minAmountIn": "3001712",
+    "amountOut": "3000000",
+    "amountOutFormatted": "3",
+    "amountOutUsd": "2.9991",
+    "minAmountOut": "3000000",
+    "timeEstimate": 10,
+    "depositAddress": "69cdf168532daa3297fadebbf82da28b5be215485a480fc2029e09a7fe3a927a",
+    "deadline": "2026-11-07T11:53:13.722Z",
+    "timeWhenInactive": "2026-11-07T11:53:13.722Z"
+  },
+  "signature": "ed25519:3MKx6BqD1pyXx3QsqdjhzU2BPQZU3oKqZrTYPEktqu1wpAJ2qS7Lna5RkHz3iNFWPoHpHy2PzsyaQtwCCrH9JDeK"
+}

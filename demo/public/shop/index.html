@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tilll Coffee · demo shop</title>
+    <meta
+      name="description"
+      content="A demo shop that takes crypto payments with Tilll. Six products, a cart, and a real checkout."
+    />
+    <link rel="stylesheet" href="/shop/shop.css" />
+  </head>
+  <body>
+    <header class="top" id="top">
+      <a class="brand" href="/shop">Tilll Coffee <span class="tag">Demo shop</span></a>
+      <button class="cart-btn" id="cart-open" type="button" aria-haspopup="dialog" aria-controls="drawer">
+        Cart <span class="count" id="cart-count">0</span>
+      </button>
+    </header>
+
+    <main id="main">
+      <section class="intro">
+        <h1>Coffee for cents</h1>
+        <p>
+          This shop takes real crypto payments through Tilll. Pick something, open the cart and pay from any chain. The
+          amounts are tiny and nothing ships.
+        </p>
+      </section>
+      <ul class="grid" id="products" aria-label="Products"></ul>
+      <p class="notice">
+        Payments here are real and settle on mainnet. Add a refund address you control at checkout, because any problem
+        is refunded there.
+        <a href="/invoices">See every order and its transactions.</a>
+      </p>
+    </main>
+
+    <div class="scrim" id="scrim" hidden></div>
+    <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+      <header class="drawer-head">
+        <h2 id="drawer-title">Your cart</h2>
+        <button class="icon-btn" id="cart-close" type="button" aria-label="Close the cart">×</button>
+      </header>
+      <div class="drawer-body" id="drawer-body"></div>
+      <footer class="drawer-foot" id="drawer-foot"></footer>
+    </aside>
+
+    <script src="/checkout.js"></script>
+    <script src="/shop/shop.js"></script>
+  </body>
+</html>

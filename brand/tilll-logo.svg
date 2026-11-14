@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" width="160" height="48" role="img" aria-label="Tilll">
+  <style>@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&amp;display=swap');</style>
+  <path fill="#0B1F3A" fill-rule="evenodd" d="M12 14H36A8 8 0 0 1 44 22V36A8 8 0 0 1 36 44H12A8 8 0 0 1 4 36V22A8 8 0 0 1 12 14ZM15 23H33A2 2 0 0 1 33 27H15A2 2 0 0 1 15 23Z"/>
+  <circle cx="24" cy="8" r="5" fill="#059669"/>
+  <text x="56" y="40" font-family="Manrope, sans-serif" font-weight="800" font-size="40" letter-spacing="-1.6" fill="#0B1F3A">tilll</text>
+</svg>

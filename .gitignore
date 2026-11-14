@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+data/
+*.log
+.DS_Store
+public/checkout.js
+public/dashboard/
+site/dist/
+
+# Mainnet run recordings: GIFs, screenshots, the video and its source stills. shots.md stays, the README links it.
+brand/mainnet-recording/*
+!brand/mainnet-recording/shots.md

@@ -1,0 +1,95 @@
+{
+  "correlationId": "441e4488-f629-4ca8-9874-ec1c9029fa4e",
+  "quoteResponse": {
+    "correlationId": "441e4488-f629-4ca8-9874-ec1c9029fa4e",
+    "timestamp": "2026-11-07T11:23:13.906Z",
+    "quoteRequest": {
+      "dry": false,
+      "swapType": "EXACT_OUTPUT",
+      "slippageTolerance": 100,
+      "originAsset": "nep141:usdt.tidepool-sandbox.testnet",
+      "depositType": "ORIGIN_CHAIN",
+      "destinationAsset": "nep141:usdc.tidepool-sandbox.testnet",
+      "amount": "3000000",
+      "refundTo": "till-test-payer-5e194c.testnet",
+      "refundType": "ORIGIN_CHAIN",
+      "recipient": "686655639be946d49712b82d906e328779a7ff6485db02fabe980636ce9f7839",
+      "recipientType": "INTENTS",
+      "deadline": "2026-11-07T11:53:13.722Z",
+      "depositMode": "SIMPLE",
+      "referral": "till"
+    },
+    "quote": {
+      "amountIn": "3031729",
+      "amountInFormatted": "3.031729",
+      "amountInUsd": "3.0294",
+      "minAmountIn": "3001712",
+      "amountOut": "3000000",
+      "amountOutFormatted": "3",
+      "amountOutUsd": "2.9991",
+      "minAmountOut": "3000000",
+      "timeEstimate": 10,
+      "depositAddress": "69cdf168532daa3297fadebbf82da28b5be215485a480fc2029e09a7fe3a927a",
+      "deadline": "2026-11-07T11:53:13.722Z",
+      "timeWhenInactive": "2026-11-07T11:53:13.722Z"
+    },
+    "signature": "ed25519:3MKx6BqD1pyXx3QsqdjhzU2BPQZU3oKqZrTYPEktqu1wpAJ2qS7Lna5RkHz3iNFWPoHpHy2PzsyaQtwCCrH9JDeK"
+  },
+  "status": "SUCCESS",
+  "updatedAt": "2026-11-07T11:23:32.695Z",
+  "swapDetails": {
+    "intentHashes": [
+      "3R1kDTT73XEdvBjC6QXQM6bkKBTDkg1i6tTv3fohSRgB",
+      "6TwjWxh12jgU9N2zMG2NFSsKNtE4EdHdJUobGGGPWwMJ"
+    ],
+    "nearTxHashes": [
+      "DdzZL6ffHGeJPHe8Fqb9VQgwR8TvWXohGh8q2vi31Mqr",
+      "5FvHRVrtzKXkFtKDMvNZHQFZEmynu5bpJHb5ceVpxMnD",
+      "HsS1ZRshBj7TrWg7AHruEpRMDFDigYU463CcRAboHLSF"
+    ],
+    "originChainTxHashes": [
+      {
+        "hash": "Fy42WcMxJteuE8rS8yAQ8KHHkLseRSruRKWUPwU1RgDw",
+        "explorerUrl": "https://testnet.nearblocks.io/txns/Fy42WcMxJteuE8rS8yAQ8KHHkLseRSruRKWUPwU1RgDw"
+      }
+    ],
+    "destinationChainTxHashes": [
+      {
+        "hash": "HsS1ZRshBj7TrWg7AHruEpRMDFDigYU463CcRAboHLSF",
+        "explorerUrl": "https://testnet.nearblocks.io/txns/HsS1ZRshBj7TrWg7AHruEpRMDFDigYU463CcRAboHLSF"
+      }
+    ],
+    "amountIn": "3001712",
+    "amountInFormatted": "3.001712",
+    "amountInUsd": "2.9994",
+    "amountOut": "3000000",
+    "amountOutFormatted": "3",
+    "amountOutUsd": "2.9991",
+    "slippage": -0.01,
+    "depositedAmount": "3031729",
+    "depositedAmountFormatted": "3.031729",
+    "depositedAmountUsd": "3.0294",
+    "refundedAmount": "30017",
+    "refundedAmountFormatted": "0.030017",
+    "refundedAmountUsd": "0.0300",
+    "referral": "till",
+    "withdrawFee": "0"
+  },
+  "tidepool": {
+    "explorer": [
+      {
+        "label": "gas top-up for deposit address",
+        "url": "https://testnet.nearblocks.io/txns/DdzZL6ffHGeJPHe8Fqb9VQgwR8TvWXohGh8q2vi31Mqr"
+      },
+      {
+        "label": "move deposit into verifier",
+        "url": "https://testnet.nearblocks.io/txns/5FvHRVrtzKXkFtKDMvNZHQFZEmynu5bpJHb5ceVpxMnD"
+      },
+      {
+        "label": "swap (execute_intents)",
+        "url": "https://testnet.nearblocks.io/txns/HsS1ZRshBj7TrWg7AHruEpRMDFDigYU463CcRAboHLSF"
+      }
+    ],
+    "intentsAccount": "69cdf168532daa3297fadebbf82da28b5be215485a480fc2029e09a7fe3a927a"
+  }
+}

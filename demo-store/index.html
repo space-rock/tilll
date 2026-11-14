@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo store · pay with crypto</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        color: #0b1f3a;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        box-sizing: border-box;
+      }
+      main {
+        width: 100%;
+        max-width: 420px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow:
+          0 1px 3px rgba(11, 31, 58, 0.12),
+          0 8px 24px rgba(11, 31, 58, 0.08);
+      }
+      .tag {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #b45309;
+        background: #fffbeb;
+        border-radius: 999px;
+        padding: 3px 10px;
+      }
+      h1 {
+        margin: 14px 0 4px;
+        font-size: 24px;
+        letter-spacing: -0.02em;
+      }
+      p {
+        margin: 0 0 14px;
+        color: #475569;
+        line-height: 1.5;
+      }
+      .price {
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin: 8px 0 18px;
+      }
+      button {
+        appearance: none;
+        width: 100%;
+        border: 0;
+        border-radius: 12px;
+        padding: 13px 16px;
+        font: inherit;
+        font-weight: 600;
+        color: #fff;
+        background: #0b1f3a;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #1e3a5f;
+      }
+      button:active {
+        background: #071426;
+      }
+      button:focus-visible {
+        outline: 2px solid #6366f1;
+        outline-offset: 2px;
+      }
+      button:disabled {
+        background: #e2e8f0;
+        color: #94a3b8;
+        cursor: not-allowed;
+      }
+      #status {
+        min-height: 1.5em;
+        margin: 14px 0 0;
+        font-weight: 600;
+      }
+      #status.ok {
+        color: #047857;
+      }
+      #status.bad {
+        color: #b91c1c;
+      }
+      #webhooks {
+        list-style: none;
+        margin: 10px 0 0;
+        padding: 0;
+        font-size: 13px;
+        color: #475569;
+      }
+      #webhooks li {
+        padding: 4px 0;
+      }
+      #webhooks b {
+        color: #047857;
+      }
+      small {
+        display: block;
+        margin-top: 18px;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="tag">Demo store</span>
+      <h1>Single-origin coffee beans</h1>
+      <p>250 g, medium roast. Pay from any supported chain; the shop is paid in USDC on NEAR.</p>
+      <div class="price">5.00 USDC</div>
+      <button id="buy" type="button" data-testid="buy">Pay with crypto</button>
+      <p id="status" role="status"></p>
+      <ul id="webhooks" aria-label="Webhooks received from Tilll"></ul>
+      <small>This is a demo against a mock payment network. No real funds move.</small>
+    </main>
+    <script src="__TILLL_URL__/checkout.js" defer></script>
+    <script src="/shop.js" defer></script>
+  </body>
+</html>

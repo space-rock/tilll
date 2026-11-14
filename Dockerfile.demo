@@ -1,0 +1,34 @@
+# The Tilll live demo: Tilll plus the cart shop (/shop) and the project site (/ and /docs), in one image.
+# It is only for the demo. The Tilll you run yourself is the Dockerfile next to this one, which has none of it.
+# Deploy it on Railway with the service variable RAILWAY_DOCKERFILE_PATH=Dockerfile.demo (see scripts/live-demo.md).
+FROM node:26-bookworm-slim AS build
+WORKDIR /app
+# better-sqlite3 ships prebuilt binaries; the compiler is only for the day one is missing for this Node.
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ \
+ && rm -rf /var/lib/apt/lists/* \
+ && npm install --global pnpm@12.3.4
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
+COPY . .
+RUN pnpm build && pnpm build:site
+
+FROM node:26-bookworm-slim
+ENV NODE_ENV=production \
+    PORT=8080 \
+    DATA_DIR=/app/data
+WORKDIR /app
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/tsconfig.json ./tsconfig.json
+# The demo runs from source with tsx (a development dependency), so the full node_modules stay.
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/src ./src
+COPY --from=build /app/demo ./demo
+COPY --from=build /app/public ./public
+COPY --from=build /app/site/dist ./site/dist
+RUN mkdir -p /app/data && chown node:node /app/data
+USER node
+EXPOSE 8080
+# The built widget is a plain file: serving it shows the server is up without asking 1Click or NEAR anything.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:'+process.env.PORT+'/checkout.js').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"
+CMD ["node", "--import", "tsx", "demo/main.ts"]

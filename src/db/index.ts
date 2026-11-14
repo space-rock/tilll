@@ -1,0 +1,54 @@
+import Database from "better-sqlite3";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const DEFAULT_MIGRATIONS_DIR = fileURLToPath(new URL("./migrations/", import.meta.url));
+
+export type Db = Database.Database;
+
+export interface OpenDbOptions {
+  /** Directory of `NNN_name.sql` files, applied in filename order. Defaults to the bundled migrations. */
+  migrationsDir?: string;
+}
+
+/** Open (or create) the SQLite database and apply any migrations not yet recorded in `schema_migrations`. */
+export function openDb(path: string, options: OpenDbOptions = {}): Db {
+  const dir = options.migrationsDir ?? DEFAULT_MIGRATIONS_DIR;
+  const db = new Database(path);
+  try {
+    db.pragma("foreign_keys = ON");
+    db.exec("CREATE TABLE IF NOT EXISTS schema_migrations (name TEXT PRIMARY KEY, applied_at TEXT NOT NULL)");
+    const done = new Set(
+      db
+        .prepare("SELECT name FROM schema_migrations")
+        .all()
+        .map((r) => (r as { name: string }).name),
+    );
+    const record = db.prepare("INSERT INTO schema_migrations (name, applied_at) VALUES (?, ?)");
+    const files = readdirSync(dir)
+      .filter((f) => f.endsWith(".sql"))
+      .toSorted();
+    // A database that remembers a file this version does not have was made by a different (earlier development) layout
+    // of the schema. Changing it in place could lose data, so say so and leave it alone.
+    const unknown = [...done].filter((name) => !files.includes(name));
+    if (unknown.length > 0) {
+      throw new Error(
+        `This database was created by an earlier development version of Tilll (it records ${unknown.join(", ")}). ` +
+          `Move ${path} away and start again.`,
+      );
+    }
+    for (const file of files) {
+      if (done.has(file)) continue;
+      const sql = readFileSync(join(dir, file), "utf8");
+      db.transaction(() => {
+        db.exec(sql);
+        record.run(file, new Date().toISOString());
+      })();
+    }
+    return db;
+  } catch (err) {
+    db.close();
+    throw err;
+  }
+}

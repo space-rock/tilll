@@ -1,0 +1,15 @@
+# Nothing secret or local goes into the image, and nothing is copied that the build makes itself.
+.git
+.env
+.env.*
+!.env.example
+data
+node_modules
+dist
+public/checkout.js
+public/dashboard
+site/dist
+*.log
+.DS_Store
+.claude
+test

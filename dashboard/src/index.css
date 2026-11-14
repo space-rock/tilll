@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/*
+ * Fonts, served from this origin (the page's policy allows nothing else). Latin subsets only: a payment dashboard in
+ * English needs nothing more, and each file is a variable font, so one file covers every weight.
+ */
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2")
+    format("woff2-variations");
+}
+@font-face {
+  font-family: "Manrope Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("../../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2")
+    format("woff2-variations");
+}
+@font-face {
+  font-family: "JetBrains Mono Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("../../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2")
+    format("woff2-variations");
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Emerald marks something live or healthy (a status dot, a progress bar). It is never a button or a link. */
+  --color-brand: #059669;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-disabled: var(--disabled);
+  --color-disabled-foreground: var(--disabled-foreground);
+  --color-ring: var(--ring);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-solid: var(--danger-solid);
+  --color-danger-solid-hover: var(--danger-solid-hover);
+  --color-danger-solid-active: var(--danger-solid-active);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+  --radius-lg: 0.75rem;
+  --radius-md: 0.5rem;
+  --radius-sm: 0.375rem;
+  --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Manrope Variable", "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --shadow-card: 0 1px 2px rgb(9 9 11 / 0.04), 0 0 0 1px rgb(9 9 11 / 0.02);
+  --shadow-pop: 0 8px 24px rgb(9 9 11 / 0.12), 0 2px 6px rgb(9 9 11 / 0.08);
+}
+
+:root {
+  --background: #fafafa;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  /* Scrollbars: quiet, a little darker than a border so they can be found, and never black. */
+  --scrollbar-thumb: #c7c7cf;
+  --scrollbar-thumb-hover: #9a9aa5;
+  --primary: #0b1f3a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1e3a5f;
+  --primary-active: #071426;
+  --disabled: #e2e8f0;
+  --disabled-foreground: #94a3b8;
+  --ring: #6366f1;
+  --danger: #b91c1c;
+  --danger-bg: #fef2f2;
+  --danger-solid: #b91c1c;
+  --danger-solid-hover: #991b1b;
+  --danger-solid-active: #7f1d1d;
+  --success: #047857;
+  --success-bg: #ecfdf5;
+  --warning: #b45309;
+  --warning-bg: #fffbeb;
+  --info: #1d4ed8;
+  --info-bg: #eff6ff;
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #111113;
+  --muted: #1c1c1f;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
+  --scrollbar-thumb: #45454d;
+  --scrollbar-thumb-hover: #5c5c66;
+  --primary: #2b4c7e;
+  --primary-foreground: #ffffff;
+  --primary-hover: #345c96;
+  --primary-active: #24416c;
+  --disabled: #27272a;
+  --disabled-foreground: #71717a;
+  --ring: #818cf8;
+  --danger: #fca5a5;
+  --danger-bg: #2a1212;
+  --success: #6ee7b7;
+  --success-bg: #0b2a20;
+  --warning: #fcd34d;
+  --warning-bg: #2a2008;
+  --info: #93c5fd;
+  --info-bg: #0f1d3a;
+}
+
+/* The page is light or dark by the person's choice (the .dark class), not by their system's: `light dark` here made
+   the system's dark scrollbars, inputs and menus appear on a light page. */
+html {
+  color-scheme: light;
+}
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings:
+    "cv11" 1,
+    "ss01" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Money and counts line up in columns. */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+dialog {
+  color: inherit;
+}
+dialog::backdrop {
+  background: rgb(9 9 11 / 0.6);
+}
+
+/* Scrollbars: thin, with the theme's own colours, on every scrolling area (the page, tables, code, drawers). */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* The same look for browsers that do not know scrollbar-color yet. */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background: var(--scrollbar-thumb);
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+    background-clip: content-box;
+  }
+}
