@@ -114,7 +114,12 @@ describe("the shop page", () => {
     const html = (await t.app.inject({ method: "GET", url: "/shop" })).body;
     const js = (await t.app.inject({ method: "GET", url: "/shop/shop.js" })).body;
     expect(html).not.toMatch(/<script(?![^>]*\ssrc=)/);
-    expect(html + js).not.toMatch(/https?:\/\//);
+    // The share card's image URL has to be absolute, but it is only a meta tag: the page never loads it.
+    const loaded = html.replace(
+      /<meta\s+(?:property="og:image"|name="twitter:image")\s+content="https:\/\/[^"]+"\s*\/>/g,
+      "",
+    );
+    expect(loaded + js).not.toMatch(/https?:\/\//);
     expect(js).toContain("/shop/api/invoices");
   });
 });

@@ -44,6 +44,8 @@ export function applyLinks(html: string, links: SiteLinks): string {
     .replaceAll("{{github}}", links.github ?? "")
     .replaceAll("{{demoVideo}}", links.demoVideo ?? "")
     .replaceAll("{{liveDemo}}", links.liveDemo ?? "")
+    // Share cards need an absolute image URL. The live demo serves the site, so its origin is the site's.
+    .replaceAll("{{siteUrl}}", links.liveDemo ? new URL(links.liveDemo).origin : ".")
     .replaceAll("{{cloneTarget}}", links.github ?? "&lt;repository-url&gt;");
   const left = /\{\{[^}]*\}\}/.exec(out);
   if (left) throw new Error(`index.html: unfilled placeholder ${left[0]}.`);

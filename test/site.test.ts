@@ -209,6 +209,23 @@ describe("the project site", () => {
     expect(html).toMatch(/<meta\s+name="description"\s+content="[^"]{60,}"/);
   });
 
+  it("has a share card: an absolute image on the live demo's host, or a relative one before it exists", () => {
+    for (const markup of [source, readFileSync(join(root, "site/docs.html"), "utf8")]) {
+      const html = applyLinks(markup, LINKS);
+      expect(html).toMatch(/<meta\s+property="og:image"\s+content="https:\/\/live\.example\/og\.png"/);
+      expect(html).toMatch(/<meta\s+name="twitter:image"\s+content="https:\/\/live\.example\/og\.png"/);
+      expect(html).toMatch(/<meta\s+name="twitter:card"\s+content="summary_large_image"/);
+      expect(html).toMatch(/<meta\s+property="og:image:alt"\s+content="[^"]{20,}"/);
+    }
+    expect(page()).toContain('content="./og.png"');
+  });
+
+  it("ships the share image at 1200 x 630", () => {
+    const png = readFileSync(join(root, "site/public/og.png"));
+    expect(png.subarray(1, 4).toString()).toBe("PNG");
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+  });
+
   it("makes no claim about who uses it, and shows no metric, testimonial or partner logo", () => {
     const text = prose(page());
     expect(text).not.toMatch(

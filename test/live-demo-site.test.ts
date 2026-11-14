@@ -14,6 +14,7 @@ function builtSite() {
   writeFileSync(join(dir, "assets", "site-abc123.js"), "console.log(1)");
   writeFileSync(join(dir, "assets", "site-abc123.css"), "body{}");
   writeFileSync(join(dir, "favicon.svg"), "<svg xmlns='http://www.w3.org/2000/svg'/>");
+  writeFileSync(join(dir, "og.png"), Buffer.from([0x89, 0x50, 0x4e, 0x47]));
   writeFileSync(join(dir, "secret.html"), "<title>Not a listed page</title>");
   return dir;
 }
@@ -61,6 +62,7 @@ describe("the live demo's project site", () => {
     expect(js.headers["cache-control"]).toContain("immutable");
     expect((await get(t, "/assets/site-abc123.css")).headers["content-type"]).toMatch(/css/);
     expect((await get(t, "/favicon.svg")).headers["content-type"]).toBe("image/svg+xml");
+    expect((await get(t, "/og.png")).headers["content-type"]).toBe("image/png");
   });
 
   it("serves nothing outside the built site, and no page it did not list", async () => {
